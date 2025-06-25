@@ -20,6 +20,8 @@ const SignUpPage = () => {
     return true;
   };
 
+ 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const success = validateForm();
