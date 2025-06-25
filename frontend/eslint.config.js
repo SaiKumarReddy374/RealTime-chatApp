@@ -28,6 +28,9 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      reactprops: {
+        'react/prop-types': 'off', // Disable prop-types as we use TypeScript
+      },
     },
   },
 ]
