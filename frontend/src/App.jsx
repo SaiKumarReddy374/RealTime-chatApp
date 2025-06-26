@@ -12,14 +12,21 @@ import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
 
 import { useAuthStore } from './store/useAuthStore';
+import { useThemeStore } from './store/useThemeStore';
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
+  const { theme } = useThemeStore();
   useEffect(() => {
     console.log('Checking authentication status...');
     checkAuth();
   }, [checkAuth]);
+
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme); // This sets it on <html>
+  }, [theme]);
 
   if (isCheckingAuth) {
     return (
@@ -28,9 +35,9 @@ const App = () => {
       </div>
     );
   }
-
+  
   return (
-    <div>
+    <div data-theme={theme}>
       <Navbar />
       <Toaster position="top-right" reverseOrder={false} />
 
@@ -38,7 +45,7 @@ const App = () => {
         <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login" />} />
         <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/" />} />
         <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to="/" />} />
-        <Route path="/setting" element={authUser ? <SettingsPage /> : <Navigate to="/login" />} />
+        <Route path="/settings" element={authUser ? <SettingsPage /> : <Navigate to="/login" />} />
         <Route path="/profile" element={authUser ? <ProfilePage /> : <Navigate to="/login" />} />
       </Routes>
     </div>

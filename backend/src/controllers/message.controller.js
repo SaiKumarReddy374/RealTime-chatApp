@@ -1,3 +1,7 @@
+const {User} = require('../models/user.model.js');
+const {Message} = require('../models/message.model.js');
+const cloudinary = require('../lib/cloudinary.js'); // Ensure you have cloudinary configured
+
 exports.getUsersForSidebar = async (req, res) => {
     try {
         const loggedInUserId = req.user._id;
