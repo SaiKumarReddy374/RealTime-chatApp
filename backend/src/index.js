@@ -6,10 +6,13 @@ const messageRoutes=require('./routes/message.route.js');
 const authRoutes=require('./routes/auth.route.js');
 const cors= require('cors');
 const {server, app } = require('./lib/socket.js');
-const path= require('path');
+import { fileURLToPath } from 'url';
+import path from 'path';
 
-dotenv.config();
-const __dirname = path.resolve();
+// This replaces __dirname in ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
