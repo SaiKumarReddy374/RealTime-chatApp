@@ -9,7 +9,8 @@ exports.generateTokens =(userId,res)=> {
     console.log("Generated JWT token:", token);
     res.cookie('jwt', token, {
         maxAge: 3600000, // 1 hour
-    
+        secure: process.env.NODE_ENV === 'production',
+
         httpOnly: true, // Prevents client-side JavaScript from accessing the cookie 
         sameSite: 'Lax' // Helps prevent CSRF attacks
     });  
