@@ -11,7 +11,6 @@ exports.generateTokens =(userId,res)=> {
         maxAge: 3600000, // 1 hour
     
         httpOnly: true, // Prevents client-side JavaScript from accessing the cookie 
-        secure: process.env.NODE_ENV !== 'development', // Use secure cookies in production
         sameSite: 'Lax' // Helps prevent CSRF attacks
     });  
     return token; 
