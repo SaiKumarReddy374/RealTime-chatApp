@@ -1,6 +1,8 @@
 const {User} = require('../models/user.model.js');
 const {Message} = require('../models/message.model.js');
 const cloudinary = require('../lib/cloudinary.js'); // Ensure you have cloudinary configured
+const { io, getReceiverSocketId } = require('../lib/socket.js');
+
 
 exports.getUsersForSidebar = async (req, res) => {
     try {
@@ -54,10 +56,14 @@ exports.sendMessage = async (req, res) => {
         const savedMessage = await newMessage.save();
 
         //realtime socket.io will be done here
+        const receiverSocketId = getReceiverSocketId(receiverId);
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit("newMessage", newMessage);
+        }
          
         res.status(201).json(savedMessage);
     } catch (error) {
-        console.error("Error sending message:", error.message);
+        console.error("Error sending message:+65", error.message);
         res.status(500).json({ error: "Error sending message" });
     }
 }

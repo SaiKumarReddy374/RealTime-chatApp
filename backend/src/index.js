@@ -5,11 +5,12 @@ const cookieParser = require('cookie-parser');
 const messageRoutes=require('./routes/message.route.js');
 const authRoutes=require('./routes/auth.route.js');
 const cors= require('cors');
+const {server, app } = require('./lib/socket.js');
 
-const app=express();
 dotenv.config();
 
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
 
 app.use(cors({
@@ -24,7 +25,7 @@ app.get('/',(req,res)=>{
     res.send("API is running successully");
 });
 const PORT =process.env.PORT || 3000;
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
     console.log('running on port: '+PORT);
     connectDB();
 });
